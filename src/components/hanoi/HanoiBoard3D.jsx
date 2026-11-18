@@ -220,8 +220,13 @@ export default function HanoiBoard3D({ towers, diskCount, selected, onTowerClick
   }, [towers, diskCount])
 
   return <div className="board-3d-wrap">
-    <div className="board-3d" ref={hostRef} role="img" aria-label="Tablero 3D interactivo de Torres de Hanoi. Haz clic en el disco superior y después en la torre de destino." />
+    <div className="board-3d-stage">
+      <div className="board-3d" ref={hostRef} role="img" aria-label="Tablero 3D interactivo de Torres de Hanoi. Selecciona el disco superior y después la torre de destino." />
+      <div className="touch-tower-targets" aria-label="Seleccionar una torre">
+        {['Torre A', 'Torre B', 'Torre C'].map((name, index) => <button key={name} type="button" className={selected === index ? 'active' : ''} aria-label={`${selected === null ? 'Seleccionar disco superior de' : 'Mover disco a'} ${name}`} onClick={() => onTowerClick(index)} />)}
+      </div>
+    </div>
     <div className="tower-labels">{['Torre A', 'Torre B', 'Torre C'].map((name, index) => <button type="button" key={name} className={selected === index ? 'active' : ''} onClick={() => onTowerClick(index)}>{name}<span>{towers[index].length ? `${towers[index].length} ${towers[index].length === 1 ? 'disco' : 'discos'}` : 'Vacía'}</span></button>)}</div>
-    <p className="board-hint">{selected === null ? 'Toca o haz clic en un disco superior para levantarlo' : 'Ahora elige la torre donde quieres colocarlo'} · Movimiento animado en 3D</p>
+    <p className="board-hint"><span className="desktop-board-hint">{selected === null ? 'Haz clic en el disco superior para levantarlo' : 'Ahora elige la torre donde quieres colocarlo'}</span><span className="mobile-board-hint">{selected === null ? 'Toca una torre para tomar su disco superior' : 'Toca la torre donde quieres dejarlo'}</span> · Movimiento animado en 3D</p>
   </div>
 }
