@@ -1,5 +1,5 @@
 import './App.css'
-import HanoiBoard from './components/hanoi/HanoiBoard'
+import HanoiBoard3D from './components/hanoi/HanoiBoard3D'
 import HanoiStats from './components/hanoi/HanoiStats'
 import useHanoi, { MAX_DISKS, MIN_DISKS } from './hooks/useHanoi'
 
@@ -19,7 +19,7 @@ function App() {
 
     <section className="game-card" aria-label="Juego de Torres de Hanoi">
       <div className="game-topline"><div><span className="section-kicker">TU TABLERO</span><h2>¿Puedes resolverlo?</h2></div><label className="disk-picker">Discos <select value={game.diskCount} onChange={(event) => game.reset(Number(event.target.value))} aria-label="Cantidad de discos">{Array.from({ length: MAX_DISKS - MIN_DISKS + 1 }, (_, i) => i + MIN_DISKS).map((n) => <option key={n} value={n}>{n} discos</option>)}</select></label></div>
-      <HanoiBoard towers={game.towers} selected={game.selected} onTowerClick={game.selectTower} />
+      <HanoiBoard3D towers={game.towers} diskCount={game.diskCount} selected={game.selected} onTowerClick={game.selectTower} />
       <div className={`game-message ${won ? 'success' : ''}`} role="status"><span className="message-dot" />{won ? <>¡Resolviste las Torres de Hanoi en <strong>{game.moves} movimientos</strong>! El mínimo era <strong>{2 ** game.diskCount - 1}</strong>.</> : game.message}</div>
       <div className="controls"><button className="button button-primary" onClick={() => game.reset()} type="button"><span>↻</span> Reiniciar</button><button className="button button-secondary" onClick={game.undo} disabled={!game.moves} type="button"><span>↶</span> Deshacer movimiento</button>{game.selected !== null && <button className="button button-quiet" onClick={() => game.selectTower(game.selected)} type="button">Cancelar selección</button>}</div>
     </section>
